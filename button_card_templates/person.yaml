@@ -30,3 +30,27 @@ person:
             ? `<img src="${variables.entity_picture}" width="100%">`
             : null;
       ]]]
+    circle: >
+      [[[
+        if (entity) {
+          let time = c => {
+            let s = (c/1e3), m = (c/6e4), h = (c/36e5), d = (c/864e5);
+            return s < 60 ? parseInt(s) + 's' : m < 60 ? parseInt(m) + 'm' : h < 24 ? parseInt(h) + 'h' : parseInt(d) + 'd';
+          },
+          last_changed = states[variables.retain] == null || states[variables.retain].state == 'unavailable'
+            ? time(Date.now() - Date.parse(entity.last_changed))
+            : time(Date.now() - Date.parse(states[variables.retain].state)),
+          stroke = variables.state === 'home'
+            ? '#b2b2b2'
+            : 'none',
+          fill = variables.state !== 'home'
+            ? 'rgba(255,255,255,0.04)'
+            : 'none';
+          return `
+            <svg viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20.5" stroke="${stroke}" stroke-width="1.5" fill="${fill}" />
+              <text x="50%" y="54%" fill="#8d8e90" font-size="14" text-anchor="middle" alignment-baseline="middle" dominant-baseline="middle">${last_changed}</text>
+            </svg>
+          `;
+        }
+      ]]]      

@@ -84,9 +84,9 @@ browser_mod:
                 sequence:
                   - service: browser_mod.notification
                     data:
-                      message: Söker efter uppdateringar...
+                      message: Checking for updates...
                   - service: homeassistant.update_entity
                     data:
                       entity_id:
                         - sensor.updates_esphome_latest
-                        - sensor.updates_kemper
+                        # - sensor.updates_kemper

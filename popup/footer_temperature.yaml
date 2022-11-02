@@ -1,0 +1,156 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  large: true
+  title: Temperature
+  style:
+    hui-grid-card:
+      $: |
+        #root {
+          padding: 0em;
+        }
+  card:
+    type: grid
+    columns: 2
+    square: false
+    cards:
+      - type: custom:mini-graph-card
+        name: Temperature
+        entities:
+          - entity: sensor.bathroom_temperature_temperature
+            name: Bathroom
+          - entity: sensor.bedroom_temperature_temperature
+            name: Master Bedroom
+          - entity: sensor.chases_bedroom_temperature_temperature
+            name: Chase Bedroom
+          - entity: sensor.kitchen_temperature_temperature
+            name: Kitchen
+          - entity: sensor.laundry_temperature_temperature
+            name: Laundry
+          - entity: sensor.lounge_temperature_temperature
+            name: Lounge
+          - entity: sensor.office_temperature_temperature
+            name: Office
+          - color: white
+            entity: sensor.wandin_current_temp
+            name: Outside
+            show_line: false
+            show_points: false
+            show_legend: false
+          - color: black
+            entity: input_number.nightime
+            name: Night
+            show_line: false
+            show_points: false
+            show_legend: false
+            y_axis: secondary
+        lower_bound: -5
+        line_width: 1
+        hour24: true
+        hours_to_show: 24
+        points_per_hour: 4
+        color_thresholds:
+          - value: 16
+            color: "#260d8f"
+          - value: 17
+            color: "#251ab9"
+          - value: 18
+            color: "#0f28e5"
+          - value: 19
+            color: "#007eff"
+          - value: 20
+            color: "#00aaf9"
+          - value: 21
+            color: "#00cc9e"
+          - value: 22
+            color: "#59E442"
+          - value: 23
+            color: "#59E442"
+          - value: 24
+            color: "#7fd206"
+          - value: 25
+            color: "#97bf00"
+          - value: 26
+            color: "#aaac00"
+          - value: 27
+            color: "#b89700"
+          - value: 28
+            color: "#c18200"
+          - value: 29
+            color: "#c86c00"
+          - value: 30
+            color: "#ca5400"
+          - value: 31
+            color: "#c93905"
+          - value: 32
+            color: "#c4161e"
+      - type: custom:mini-graph-card
+        name: Humidity
+        entities:
+          - entity: sensor.bathroom_temperature_humidity
+            name: Bathroom
+          - entity: sensor.bedroom_temperature_humidity
+            name: Master Bedroom
+          - entity: sensor.chases_bedroom_temperature_humidity
+            name: Chase Bedroom
+          - entity: sensor.kitchen_temperature_humidity
+            name: Kitchen
+          - entity: sensor.laundry_temperature_humidity
+            name: Laundry
+          - entity: sensor.lounge_temperature_humidity
+            name: Lounge
+          - entity: sensor.office_temperature_humidity
+            name: Office
+          - color: white
+            entity: sensor.coldstream_humidity
+            name: Outside
+            show_line: false
+            show_points: false
+            show_legend: false
+          - color: black
+            entity: input_number.nightime
+            name: Night
+            show_line: false
+            show_points: false
+            show_legend: false
+            y_axis: secondary
+        lower_bound: 30
+        line_width: 1
+        hour24: true
+        hours_to_show: 24
+        points_per_hour: 4
+        color_thresholds:
+          - value: 0
+            color: "#260d8f"
+          - value: 10
+            color: "#251ab9"
+          - value: 20
+            color: "#0f28e5"
+          - value: 30
+            color: "#007eff"
+          - value: 40
+            color: "#00aaf9"
+          - value: 45
+            color: "#00cc9e"
+          - value: 50
+            color: "#59E442"
+          - value: 55
+            color: "#59E442"
+          - value: 60
+            color: "#7fd206"
+          - value: 65
+            color: "#97bf00"
+          - value: 70
+            color: "#aaac00"
+          - value: 75
+            color: "#b89700"
+          - value: 80
+            color: "#c18200"
+          - value: 85
+            color: "#c86c00"
+          - value: 90
+            color: "#ca5400"
+          - value: 95
+            color: "#c93905"
+          - value: 100
+            color: "#c4161e"

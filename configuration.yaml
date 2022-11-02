@@ -1,23 +1,41 @@
 homeassistant:
-  name: Hem
-  latitude: !secret homeassistant_latitude
-  longitude: !secret homeassistant_longitude
-  elevation: !secret homeassistant_elevation
-  unit_system: metric
-  temperature_unit: C
-  time_zone: Europe/Stockholm
-  currency: SEK
   packages: !include_dir_named packages
   customize_domain:
     automation:
       initial_state: true
   allowlist_external_dirs:
     - /config
+  auth_providers:
+    - type: homeassistant
+    - type: trusted_networks
+      trusted_networks:
+        - 192.168.1.0/24
+      trusted_users:
+        192.168.1.84: 71d920f46eb34b88b72e954b48307d97
+      allow_bypass_login: true    
 
 default_config:
 
+tts:
+  - platform: google_translate
+
 frontend: !include themes.yaml
 template: !include sidebar.yaml
+scene: !include scenes.yaml
+automation: !include automations.yaml
+
+http:
+  # ssl_certificate: /ssl/fullchain.pem
+  # ssl_key: /ssl/privkey.pem
+  use_x_forwarded_for: true
+  trusted_proxies: 192.168.1.0/24
+
+influxdb:
+  host: a0d7b954-influxdb
+  port: 8086
+  database: !secret dbname
+  username: !secret influx_user
+  password: !secret influx_pass  
 
 lovelace:
   mode: yaml
@@ -37,11 +55,37 @@ lovelace:
       { url: '/local/marked.min.js?v=4.1.1',                                        type: module },
       { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
       { url: '/local/browser_mod_icon.js?v=0.3',                                    type: module },
-      { url: '/local/fonts.css?v=2.1',                                              type: css }
+      { url: '/local/fonts.css?v=2.1',                                              type: css },
+      { url: /local/7segment.css, type: css },    
+      { url: "/local/kiosk-mode.js?v=1.2.1", type: module },  
+      { url: "/local/text-element.js?v=0", type: module },          
+      
     ]
+  dashboards:
+    office-dashboard: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: ui-office.yaml
+      title: Office
+      icon: mdi:laptop
+      show_in_sidebar: true
+      require_admin: false
+    kitchen-dashboard: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: ui-kitchen.yaml
+      title: Kitchen
+      icon: mdi:silverware-fork
+      show_in_sidebar: true
+      require_admin: false
+    new-dash: # Needs to contain a hyphen (-)
+      mode: yaml
+      filename: ui-lovelace-new.yaml
+      title: new
+      icon: mdi:warning
+      show_in_sidebar: true
+      require_admin: false    
 
 recorder:
-  db_url: !secret recorder_db_url
+  # db_url: !secret recorder_db_url
   exclude:
     entity_globs:
       - sensor.browser_*
@@ -57,3 +101,28 @@ sensor:
     display_options:
       - time
       - date
+
+calendar:
+  - platform: caldav
+    username: !secret caldav_username
+    password: !secret caldav_password
+    url: https://caldav.icloud.com
+
+spotcast:
+  sp_dc: !secret sp_dc
+  sp_key: !secret sp_key
+
+notify:
+  - name: ALL_DEVICES
+    platform: group
+    services:
+      - service: mobile_app_trent_iphone
+      - service: mobile_app_caitlyn_iphone
+
+browser_mod:
+  prefix: browser_
+  devices:
+    6c94ef6c-d1643816:
+      name: Trents PC
+    d82d75b5-9ef81ed9:
+      name: Office Tablet

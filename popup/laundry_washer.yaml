@@ -1,0 +1,203 @@
+action: fire-dom-event
+browser_mod:
+  command: popup
+  title: Washing Machine
+  style:
+    hui-vertical-stack-card:
+      $: |
+        button-card {
+          align-self: center;
+          padding: 2em 0 2em 0;
+        }
+        hui-history-graph-card {
+          padding: 0 1em 0 1em;
+        }
+      $hui-entities-card$: |
+        #states {
+          padding-left: 2em;
+          padding-bottom: .9em;
+        }
+      $hui-glance-card$: |
+        .entities {
+          padding: 12px 29px 4px 26px !important;
+        }
+      $hui-map-card:
+        $: |
+          #root {
+            height: 27em;
+            padding-bottom: 0 !important;
+          }
+          ha-icon-button {
+            color: var(--primary-color);
+            zoom: 112%;
+            margin-top: 0.5em;
+          }
+          ha-card {
+            border-top: 2px solid #1a1a1a;
+            border-radius: 0;
+            transition: none;
+          }
+        $ha-map$: |
+          #map {
+            background-color: #191919 !important;
+          }
+          .leaflet-control-attribution {
+            display: none;
+          }
+          .leaflet-bar a {
+            background-color: rgba(115, 123, 124, 0.2) !important;
+            color: #9da0a2 !important;
+            backdrop-filter: blur(0.25em);
+            zoom: 120%;
+          }
+          a.leaflet-control-zoom-in {
+            border-bottom: 1px solid #181818 !important;
+          }
+          .leaflet-pane.leaflet-tile-pane {
+            filter: contrast(85%);
+          }
+  card:
+    type: vertical-stack
+    cards:
+      - type: picture-elements
+        elements:
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/dry.png
+            state_image:
+              Drying: /local/lg-icons/dry-on.png
+            style:
+              top: 73%
+              left: 59%
+              width: 10%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/cool.png
+            state_image:
+              Cooling: /local/lg-icons/cool-on.png
+            style:
+              top: 73%
+              left: 67%
+              width: 10%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/sensing.png
+            state_image:
+              Detecting: /local/lg-icons/sensing-on.png
+            style:
+              top: 33%
+              left: 33%
+              width: 20%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/wash.png
+            state_image:
+              Washing: /local/lg-icons/wash-on.png
+            style:
+              top: 33%
+              left: 51%
+              width: 20%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/rinse.png
+            state_image:
+              Rinsing: /local/lg-icons/rinse-on.png
+            style:
+              top: 33%
+              left: 69%
+              width: 20%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer_run_state
+            image: /local/lg-icons/spin.png
+            state_image:
+              Spinning: /local/lg-icons/spin-on.png
+            style:
+              top: 33%
+              left: 87%
+              width: 20%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washerdryer
+            image: /local/lg-icons/wifi.png
+            state_image:
+              "on": /local/lg-icons/wifi-on.png
+            style:
+              top: 73%
+              left: 32%
+              width: 10%
+              image-rendering: crisp
+          - type: image
+            entity: sensor.washer_door_lock
+            image: /local/lg-icons/lock.png
+            state_image:
+              "on": /local/lg-icons/lock-on.png
+            style:
+              top: 73%
+              left: 45%
+              width: 10%
+              image-rendering: crisp
+          - type: state-label
+            entity: sensor.blank
+            prefix: "18:88"
+            style:
+              color: "#555"
+              font-family: segment7
+              font-size: 50px
+              left: 95%
+              top: 74%
+              transform: translate(-100%,-50%)
+          - type: state-label
+            entity: sensor.washer_time_display
+            style:
+              color: "#8df427"
+              font-family: segment7
+              font-size: 50px
+              left: 95%
+              top: 74%
+              transform: translate(-100%,-50%)
+        image: /local/hass-combo-card-bg.png
+      - type: conditional
+        conditions:
+          - entity: sensor.washerdryer_run_state
+            state_not: "-"
+          - entity: sensor.washerdryer_run_state
+            state_not: Standby
+        card:
+          type: entities
+          entities:
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: water_temp
+              name: Water Temperature
+              icon: mdi:coolant-temperature
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: spin_speed
+              name: Spin Speed
+              icon: mdi:rotate-right
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: dry_level
+              name: Dry Level
+              icon: mdi:air-filter
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: run_state
+              name: Current State
+              icon: mdi:archive
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: initial_time
+              name: Initial Time
+              icon: mdi:clock
+            - entity: sensor.washerdryer
+              type: attribute
+              attribute: tubclean_count
+              name: Washes Since Tub Clean
+              icon: mdi:creation
+          state_color: false
