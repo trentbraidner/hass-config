@@ -28,7 +28,6 @@ browser_mod:
           card_mod:
             class: content
           entities:
-
             - entity: binary_sensor.rpi_ping
               secondary_info: last-changed
               name: Anslutning
@@ -38,18 +37,17 @@ browser_mod:
               width: 55%
               height: 2em
               decimal: 0
-              unit_of_measurement: '%'
+              unit_of_measurement: "%"
               positions: &positions
                 icon: outside
-                indicator: 'off'
+                indicator: "off"
                 name: outside
               severity: &severity
-                - color: '#6d2525'
+                - color: "#6d2525"
                   from: 90
                   to: 999
               entity_row: true
               entities:
-
                 - entity: sensor.rpi_cpu
                   tap_action:
                     action: call-service
@@ -82,12 +80,11 @@ browser_mod:
               width: 55%
               height: 2em
               decimal: 0
-              unit_of_measurement: '%'
+              unit_of_measurement: "%"
               positions: *positions
               severity: *severity
               entity_row: true
               entities:
-
                 - entity: sensor.rpi_docker_1cpu
                   name: Docker CPU
 

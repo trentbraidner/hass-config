@@ -5,6 +5,7 @@ homeassistant:
       initial_state: true
   allowlist_external_dirs:
     - /config
+
   auth_providers:
     - type: homeassistant
     - type: trusted_networks
@@ -12,14 +13,18 @@ homeassistant:
         - 192.168.1.0/24
       trusted_users:
         192.168.1.84: 71d920f46eb34b88b72e954b48307d97
-      allow_bypass_login: true    
+      allow_bypass_login: true
 
 default_config:
 
 tts:
   - platform: google_translate
 
-frontend: !include themes.yaml
+frontend:
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js
+  themes: !include_dir_merge_named themes
+
 template: !include sidebar.yaml
 scene: !include scenes.yaml
 automation: !include automations.yaml
@@ -35,31 +40,40 @@ influxdb:
   port: 8086
   database: !secret dbname
   username: !secret influx_user
-  password: !secret influx_pass  
+  password: !secret influx_pass
 
 lovelace:
   mode: yaml
   resources:
     [
-      { url: /hacsfiles/apexcharts-card/apexcharts-card.js,                         type: module },
-      { url: /hacsfiles/bar-card/bar-card.js,                                       type: module },
-      { url: /hacsfiles/button-card/button-card.js,                                 type: module },
-      { url: /hacsfiles/custom-icons/custom-icons.js,                               type: module },
-      { url: /hacsfiles/lovelace-layout-card/layout-card.js,                        type: module },
-      { url: /hacsfiles/lovelace-more-info-card/more-info-card.js,                  type: module },
-      { url: /hacsfiles/lovelace-mushroom/mushroom.js,                              type: module },
-      { url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,            type: module },
-      { url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,  type: module },
-      { url: /hacsfiles/swipe-card/swipe-card.js,                                   type: module },
+      { url: /hacsfiles/apexcharts-card/apexcharts-card.js, type: module },
+      { url: /hacsfiles/bar-card/bar-card.js, type: module },
+      { url: /hacsfiles/button-card/button-card.js, type: module },
+      { url: /hacsfiles/custom-icons/custom-icons.js, type: module },
+      { url: /hacsfiles/lovelace-layout-card/layout-card.js, type: module },
+      {
+        url: /hacsfiles/lovelace-more-info-card/more-info-card.js,
+        type: module,
+      },
+      { url: /hacsfiles/lovelace-mushroom/mushroom.js, type: module },
+      {
+        url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js,
+        type: module,
+      },
+      {
+        url: /hacsfiles/lovelace-xiaomi-vacuum-map-card/xiaomi-vacuum-map-card.js,
+        type: module,
+      },
+      { url: /hacsfiles/swipe-card/swipe-card.js, type: module },
 
-      { url: '/local/marked.min.js?v=4.1.1',                                        type: module },
-      { url: '/local/vanilla-tilt.min.js?v=1.7.2',                                  type: module },
-      { url: '/local/browser_mod_icon.js?v=0.3',                                    type: module },
-      { url: '/local/fonts.css?v=2.1',                                              type: css },
-      { url: /local/7segment.css, type: css },    
-      { url: "/local/kiosk-mode.js?v=1.2.1", type: module },  
-      { url: "/local/text-element.js?v=0", type: module },          
-      
+      { url: "/local/marked.min.js?v=4.3.0", type: module },
+      { url: "/local/vanilla-tilt.min.js?v=1.8.0", type: module },
+      { url: "/local/browser_mod_icon.js?v=0.5", type: module },
+      { url: "/local/fonts.css?v=2.1", type: css },
+      { url: /local/7segment.css, type: css },
+      { url: /hacsfiles/kiosk-mode/kiosk-mode.js, type: module },
+      { url: "/local/text-element.js?v=0", type: module },
+      { url: /hacsfiles/tabbed-card/tabbed-card.js, type: module },
     ]
   dashboards:
     office-dashboard: # Needs to contain a hyphen (-)
@@ -82,7 +96,7 @@ lovelace:
       title: new
       icon: mdi:warning
       show_in_sidebar: true
-      require_admin: false    
+      require_admin: false
 
 recorder:
   # db_url: !secret recorder_db_url
@@ -94,7 +108,8 @@ logger:
   default: warning
   logs:
     homeassistant.components.websocket_api: fatal
-    custom_components.monitor_docker.helpers: fatal
+    custom_components.monitor_docker.helpers: error
+    homeassistant.setup: error
 
 sensor:
   - platform: time_date

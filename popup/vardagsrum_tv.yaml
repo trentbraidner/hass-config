@@ -10,14 +10,12 @@ browser_mod:
     content:
       type: vertical-stack
       cards:
-
         - type: entities
           state_color: true
           show_header_toggle: false
           card_mod:
             class: content
           entities:
-
             - entity: media_player.sony_bravia_tv
               name: Sony Bravia
               secondary_info: last-changed
@@ -29,6 +27,10 @@ browser_mod:
               card_mod:
                 style:
                   # hide everything but ha-select
+                  $: |
+                    h1 {
+                      display: none !important;
+                    }
                   .: |
                     h1, state-card-content {
                       display: none;

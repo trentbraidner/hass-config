@@ -24,9 +24,8 @@ browser_mod:
           card_mod:
             class: content
           entities:
-
-            - entity: binary_sensor.template_udm_internet
-              secondary_info: last-changed
+            # - entity: binary_sensor.template_udm_internet
+            #   secondary_info: last-changed
 
             - entity: sensor.template_udm_cpu_temp
               name: CPU Temperatur
@@ -35,13 +34,13 @@ browser_mod:
               width: 55%
               height: 2em
               decimal: 0
-              unit_of_measurement: '%'
+              unit_of_measurement: "%"
               positions:
                 icon: outside
-                indicator: 'off'
+                indicator: "off"
                 name: outside
               severity:
-                - color: '#6d2525'
+                - color: "#6d2525"
                   from: 90
                   to: 999
               entity_row: true
