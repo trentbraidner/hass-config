@@ -2,23 +2,11 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-<<<<<<< HEAD
     title: Trent
     card_mod:
       style:
         #popup header
         .:
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-    title: Caitlyn
-=======
-    title: Trent
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
-    card_mod:
-      style:
-        #popup header
-        .:    
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
     style: >
       --popup-max-width: 400px;
     content:
@@ -28,15 +16,7 @@ browser_mod:
           card_mod:
             class: content
           entities:
-<<<<<<< HEAD
             - entity: person.trent
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-            - entity: person.caitlyn
-=======
-            - entity: person.trent
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
               secondary_info: last-changed
 
         - type: history-graph
@@ -46,15 +26,7 @@ browser_mod:
                 padding: 0 2em 1em 1.6em !important;
               }
           entities:
-<<<<<<< HEAD
             - entity: person.trent
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-            - entity: person.caitlyn
-=======
-            - entity: person.trent
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
 
         - type: glance
           card_mod:
@@ -65,16 +37,7 @@ browser_mod:
               }
           show_state: false
           entities:
-<<<<<<< HEAD
             - entity: device_tracker.unifi_trentsiphone
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-            - entity: device_tracker.caitlyn_iphone_3
-=======
-
-            - entity: device_tracker.trent_s_iphone_2
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
               name: Router
               icon: mdi:wifi
               card_mod:
@@ -89,15 +52,7 @@ browser_mod:
             #   card_mod:
             #     style: *state
 
-<<<<<<< HEAD
             - entity: device_tracker.trentsiphone_app
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-            - entity: device_tracker.caitlyn_iphone_3
-=======
-            - entity: device_tracker.trentsiphone_app
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
               name: Position
               icon: cil:iphone-modern
               card_mod:
@@ -120,15 +75,7 @@ browser_mod:
                 template: icon_name
                 tap_action:
                   action: call-service
-<<<<<<< HEAD
                   service: notify.mobile_app_trent_iphone
-=======
-<<<<<<< HEAD:popup/home_caitlyn.yaml
-                  service: notify.mobile_app_caitlyn_iphone
-=======
-                  service: notify.mobile_app_trent_iphone
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9:popup/home_trent.yaml
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
                   service_data:
                     title: Find my iPhone
                     message: Here I am
@@ -143,11 +90,7 @@ browser_mod:
           default_zoom: 16
           dark_mode: true
           entities:
-<<<<<<< HEAD
             - device_tracker.trentsiphone_app
-=======
-            - device_tracker.iphone
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
           card_mod:
             style:
               .: |
@@ -184,8 +127,4 @@ browser_mod:
                 }
                 .leaflet-pane.leaflet-tile-pane {
                   filter: invert(0.95) grayscale(0.95) contrast(95%);
-<<<<<<< HEAD
                 }
-=======
-                }
->>>>>>> 2ee56df17dca8515e614fb84b78cc5c0e8cca4e9
