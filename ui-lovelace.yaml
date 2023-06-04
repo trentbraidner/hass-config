@@ -492,6 +492,7 @@ views:
                       entity.attributes.current_temperature;
                   }
                 ]]]
+              circle_input_unit: "°C"
 
       #################################################
       #                                               #

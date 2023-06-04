@@ -1,71 +1,104 @@
 action: fire-dom-event
 browser_mod:
-  command: popup
-  title: Heating
-  style:
-    hui-vertical-stack-card:
-      $hui-entities-card$: |
-        #states {
-          padding-top: 0.5em;
-          padding-bottom: 0em;
-        }
-  card:
-    type: vertical-stack
-    cards:
-      - type: thermostat
-        entity: climate.dining_room
+  service: browser_mod.popup
+  data:
+    title: Climate
+    card_mod:
+      style:
+        #popup header
+        .: |
+          div.content {
+            margin-top: -24px !important;
+          }
+    content:
+      type: custom:tabbed-card
+      styles:
+        --mdc-theme-primary: var(--primary-text-color)
+        --mdc-tab-text-label-color-default: rgba(var(--rgb-primary-text-color), 0.8)
+        --mdc-typography-button-font-size: 14px
+      tabs:
+        - card:
+            type: vertical-stack
+            cards:
+              - type: thermostat
+                entity: climate.dining_room
 
-      - type: entities
-        card_mod:
-          class: content
-        entities:
-          - entity: sensor.dining_room_temperature
-            name: Temperature
-          - entity: sensor.dining_room_humidity
-            name: Humidity
+              - type: entities
+                card_mod:
+                  class: content
+                entities:
+                  - entity: sensor.dining_room_temperature
+                    name: Temperature
+                  - entity: sensor.dining_room_humidity
+                    name: Humidity
 
-      - type: custom:apexcharts-card
-        layout: minimal
-        locale: au
-        graph_span: 8h
-        show:
-          loading: false
-        apex_config:
-          plotOptions:
-            area:
-              fillTo: end
-          grid:
-            padding:
-              top: -15
-          fill:
-            type: gradient
-            gradient:
-              type: vertical
-              opacityFrom: 0.8
-              opacityTo: 0
-              stops:
-                - 0
-                - 99
-                - 100
-          stroke:
-            width: 4
-          tooltip:
-            style:
-              fontSize: 14px
-            x:
-              format: dddd HH:mm
-          chart:
-            height: 140px
-            offsetY: -20px
-          xaxis:
-            crosshairs:
-              show: false
-        series:
-          - entity: sensor.dining_room_temperature
-            name: Temp
-            color: "#385581"
-            type: area
-            fill_raw: last
-            group_by:
-              func: avg
-              duration: 1h
+              - type: custom:apexcharts-card
+                layout: minimal
+                locale: au
+                graph_span: 8h
+                show:
+                  loading: false
+                apex_config:
+                  plotOptions:
+                    area:
+                      fillTo: end
+                  grid:
+                    padding:
+                      top: -15
+                  fill:
+                    type: gradient
+                    gradient:
+                      type: vertical
+                      opacityFrom: 0.8
+                      opacityTo: 0
+                      stops:
+                        - 0
+                        - 99
+                        - 100
+                  stroke:
+                    width: 4
+                  tooltip:
+                    style:
+                      fontSize: 14px
+                    x:
+                      format: dddd HH:mm
+                  chart:
+                    height: 140px
+                    offsetY: -20px
+                  xaxis:
+                    crosshairs:
+                      show: false
+                series:
+                  - entity: sensor.dining_room_temperature
+                    name: Temp
+                    color: "#385581"
+                    type: area
+                    fill_raw: last
+                    group_by:
+                      func: avg
+                      duration: 1h
+
+          attributes:
+            label: AC
+        - card:
+            type: vertical-stack
+            cards:
+              - type: entities
+                card_mod:
+                  class: content
+                entities:
+                  - entity: binary_sensor.sovrum_contact_contact
+                    name: Sovrumsfönster
+                    icon: mdi:window-closed
+                  - entity: automation.climate_safeguard
+                    name: Endast fläkt om fönstret är stängt
+                    icon: mdi:robot
+
+                  - entity: timer.climate
+                  - entity: switch.climate_timer
+                    name: Timer
+                  - type: custom:slider-entity-row
+                    entity: input_number.climate_timer
+                    hide_state: false
+          attributes:
+            label: Timer
