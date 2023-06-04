@@ -1,0 +1,50 @@
+homeassistant:
+  customize:
+    ####################################################
+    #                                                  #
+    #                    CUSTOMIZE                     #
+    #                                                  #
+    ####################################################
+
+    #light
+
+    #media_player
+
+    #binary_sensor
+
+    #battery
+
+    #fan
+
+    # template.yaml
+    select.hdmi_samsung:
+      friendly_name: Source
+      icon: custom:hdmi-source
+    select.hdmi_bedroomsamsung:
+      friendly_name: Source
+      icon: custom:hdmi-source
+
+    #sidebar_vacuum.yaml
+    vacuum.roborock_s7:
+      friendly_name: Roborock S7
+      icon: custom:roborock-vacuum
+    sensor.roborock_s7_last_clean_end:
+      friendly_name: Last cleaned
+      icon: mdi:calendar-clock
+
+    #sidebar_information.yaml
+    sensor.home_assistant_log:
+      friendly_name: Log file
+      icon: mdi:file-document
+    sensor.uptime:
+      friendly_name: Last restart
+      icon: mdi:update
+      device_class: timestamp
+
+    #person
+    person.trent:
+      entity_picture: /local/trent.jpg
+    device_tracker.trent_s_iphone:
+      entity_picture: /local/device_tracker.svg
+    # person.caitlyn:
+    #   entity_picture: /local/caitlyn.jpg

@@ -1,0 +1,37 @@
+wake_trent:
+  sequence:
+  - type: turn_on
+    device_id: 397a2e90914cb7e3faceaa96464e2904
+    entity_id: light.bedroom_ceiling
+    domain: light
+  - type: turn_on
+    device_id: a0f35b01fe1572b3a6c4b5d3a6419ffc
+    entity_id: light.philips_hue_go
+    domain: light
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.outdoor_spotlights
+    domain: switch
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.bedroom
+  - service: media_player.volume_set
+    target:
+      entity_id: media_player.bedroom
+    data:
+      volume_level: 1
+  - service: media_player.play_media
+    data:
+      media_content_id: https://home.braidner.com:8123/local/i_remember.mp3
+      media_content_type: '''audio/mp3'''
+    target:
+      entity_id:
+      - media_player.bedroom
+  mode: single
+  alias: Wake trent
+  icon: mdi:alarm

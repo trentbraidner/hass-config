@@ -2,7 +2,7 @@ action: fire-dom-event
 browser_mod:
   service: browser_mod.popup
   data:
-    title: Platta
+    title: Office Tablet
     card_mod:
       style:
         #popup header
@@ -16,12 +16,12 @@ browser_mod:
             class: content
           entities:
 
-            - entity: switch.galaxy_tab_a_screen
+            - entity: switch.lenovo_tab_m8_screensaver
               secondary_info: last-changed
 
             - type: custom:slider-entity-row
-              entity: number.galaxy_tab_a_screen_brightness
-              name: Ljusstyrka
+              entity: number.lenovo_tab_m8_screensaver_brightness
+              name: Brightness
               icon: mdi:brightness-6
               hide_state: false
               card_mod:
@@ -32,9 +32,9 @@ browser_mod:
                       flex: auto !important;
                     }
 
-            - entity: switch.galaxy_tab_a_screensaver
+            - entity: switch.lenovo_tab_m8_screensaver
 
-            - entity: binary_sensor.galaxy_tab_a_plugged_in
+            - entity: binary_sensor.lenovo_tab_m8_plugged_in
 
             - type: custom:bar-card
               width: 55%
@@ -55,13 +55,13 @@ browser_mod:
               entity_row: true
               entities:
 
-                - entity: sensor.galaxy_tab_a_battery
+                - entity: sensor.lenovo_tab_m8_battery_level
                   icon: mdi:battery
                   tap_action:
                     action: call-service
                     service: homeassistant.update_entity
                     service_data:
-                      entity_id: sensor.galaxy_tab_a_battery_level
+                      entity_id: sensor.lenovo_tab_m8_battery_level
 
             - type: custom:bar-card
               width: 55%
@@ -77,7 +77,7 @@ browser_mod:
               entities:
 
                 - entity: sensor.template_fullykiosk_memory
-                  name: Minne - 2GB
+                  name: Memory - 2GB
                   icon: mdi:memory
                   tap_action:
                     action: call-service
@@ -86,7 +86,7 @@ browser_mod:
                       entity_id: sensor.template_fullykiosk_memory
 
                 - entity: sensor.template_fullykiosk_storage
-                  name: Lagring - 32GB
+                  name: Storage - 32GB
                   icon: mdi:sd
                   tap_action:
                     action: call-service
@@ -115,14 +115,14 @@ browser_mod:
                     sequence:
                       - service: browser_mod.notification
                         data:
-                          message: Laddar om startsidan...
+                          message: Reloading Home Page...
                       - service: button.press
                         data:
-                          entity_id: button.galaxy_tab_a_load_start_url
+                          entity_id: button.lenovo_tab_m8_load_start_url
                 template: icon_name
 
               - type: custom:button-card
-                name: Hela appen
+                name: Reload
                 icon: mdi:reload
                 tap_action:
                   action: call-service
@@ -131,8 +131,8 @@ browser_mod:
                     sequence:
                       - service: browser_mod.notification
                         data:
-                          message: Startar om Fully Kiosk Browser...
+                          message: Starting Fully Kiosk Browser...
                       - service: button.press
                         data:
-                          entity_id: button.galaxy_tab_a_restart_browser
+                          entity_id: button.lenovo_tab_m8_restart_browser
                 template: icon_name

@@ -1,16 +1,16 @@
 homeassistant:
   customize:
-    vacuum.morty:
+    vacuum.roborock_s7:
       icon: cil:roborock-vacuum
-    sensor.morty_last_clean_end:
-      friendly_name: Senast städat
+    sensor.roborock_s7_last_clean_end:
+      friendly_name: Last Cleaned
       icon: mdi:calendar-clock
 
 template:
   - sensor:
       - unique_id: vacuum_filter
         state: >
-          {% set entity_id = 'sensor.morty_filter_left' %}
+          {% set entity_id = 'sensor._filter_left' %}
           {{ (states(entity_id) | int(default=0) / 5400) | int(default=0) }}
         attributes:
           friendly_name: Filter
@@ -19,28 +19,28 @@ template:
 
       - unique_id: vacuum_mainbrush
         state: >
-          {% set entity_id = 'sensor.morty_main_brush_left' %}
+          {% set entity_id = 'sensor.roborock_s7_main_brush_left' %}
           {{ (states(entity_id) | int(default=0) / 10800) | int(default=0) }}
         attributes:
-          friendly_name: Huvudborste
+          friendly_name: Main Brush
           icon: cil:roborock-mainbrush
           unit_of_measurement: '%'
 
       - unique_id: vacuum_sensors
         state: >
-          {% set entity_id = 'sensor.morty_sensor_dirty_left' %}
+          {% set entity_id = 'sensor.roborock_s7_sensor_dirty_left' %}
           {{ (states(entity_id) | int(default=0) / 1080) | int(default=0) }}
         attributes:
-          friendly_name: Sensorer
+          friendly_name: Sensor
           icon: cil:roborock-sensor
           unit_of_measurement: '%'
 
       - unique_id: vacuum_sidebrush
         state: >
-          {% set entity_id = 'sensor.morty_side_brush_left' %}
+          {% set entity_id = 'sensor.roborock_s7_side_brush_left' %}
           {{ (states(entity_id) | int(default=0) / 7200) | int(default=0) }}
         attributes:
-          friendly_name: Sidoborste
+          friendly_name: Sidebrush
           icon: cil:roborock-sidebrush
           unit_of_measurement: '%'
 
@@ -48,10 +48,10 @@ automation:
   - alias: vacuum_empty_bin
     id: '5443599527378'
     variables:
-      vacuum: vacuum.morty
+      vacuum: vacuum.roborock_s7
     trigger:
       platform: state
-      entity_id: sensor.morty_total_clean_count
+      entity_id: sensor.roborock_s7_total_clean_count
     condition: >
       {{ not is_state(vacuum, 'docked') }}
     action:
@@ -81,7 +81,7 @@ camera:
     username: !secret xiaomi_cloud_username
     password: !secret xiaomi_cloud_password
     name: vacuum_map
-    country: de
+    country: sg
     colors:
       color_robo: [224,224,224]
       color_charger: [27,117,27]
@@ -110,9 +110,9 @@ camera:
     map_transformation:
       scale: 2
       trim:
-        top: 19
-        right: 21
-        bottom: 24
+        top: 16
+        right: 22
+        bottom: 25
         left: 21
     sizes:
       charger_radius: 10

@@ -1,0 +1,392 @@
+- id: '1634776640291'
+  alias: Notification - Caitlyn leaving work, notify Trent
+  description: Notify Trent via home assistant app when Caitlyn is leaving work
+  use_blueprint:
+    path: homeassistant/notify_leaving_zone.yaml
+    input:
+      notify_device: 390668db99a242eca619001c2b278809
+      zone_entity: zone.bulleen_screens
+      person_entity: person.caitlyn
+- id: '1638700190165'
+  alias: Wake Trent
+  description: ''
+  trigger:
+  - platform: state
+    entity_id: input_select.conditional_media
+    from: sadfd
+    to: sdfsfd
+    attribute: options
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 397a2e90914cb7e3faceaa96464e2904
+    entity_id: light.bedroom_light_switch
+    domain: light
+  - type: turn_on
+    device_id: a0f35b01fe1572b3a6c4b5d3a6419ffc
+    entity_id: light.philips_hue_go
+    domain: light
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.outdoor_spotlights
+    domain: switch
+  - service: media_player.turn_on
+    target:
+      entity_id:
+      - media_player.bedroom
+  - service: media_player.volume_set
+    target:
+      entity_id:
+      - media_player.bedroom
+    data:
+      volume_level: 1
+  - service: media_player.play_media
+    data:
+      media_content_type: '''audio/mp3'''
+      media_content_id: https://home.braidner.com:8123/local/i_remember.mp3
+  mode: single
+- id: '1646531405356'
+  alias: Turn off Lounge Lamp in the morning
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+  condition:
+  - condition: device
+    type: is_on
+    device_id: a0f35b01fe1572b3a6c4b5d3a6419ffc
+    entity_id: light.philips_hue_go
+    domain: light
+  action:
+  - type: turn_off
+    device_id: a0f35b01fe1572b3a6c4b5d3a6419ffc
+    entity_id: light.philips_hue_go
+    domain: light
+  mode: single
+- id: '1649079191918'
+  alias: Laundry On 2way - kitchen on
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_on
+    device_id: 9f7b1ff33063d1e37717683b761f6442
+    entity_id: light.kitchen_light_switch_right
+    domain: light
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  mode: single
+- id: '1649079359851'
+  alias: Laundry On 2way - kitchen off
+  description: ''
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 9f7b1ff33063d1e37717683b761f6442
+    entity_id: light.kitchen_light_switch_right
+    domain: light
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  mode: single
+- id: '1650555484058'
+  alias: Open blinds
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:30:00
+  condition:
+  - condition: device
+    device_id: 63723d6717b32a57d7b36d0c7b306a60
+    domain: cover
+    entity_id: cover.bedroom_blinds
+    type: is_closed
+  action:
+  - device_id: 63723d6717b32a57d7b36d0c7b306a60
+    domain: cover
+    entity_id: cover.bedroom_blinds
+    type: set_position
+    position: 100
+  mode: single
+- id: '1658241023915'
+  alias: Alarm
+  description: ''
+  trigger:
+  - platform: time
+    at: 08:30:00
+  condition:
+  - condition: device
+    device_id: e25e7d4d6e6f81fb9997fe247cb739f6
+    domain: device_tracker
+    entity_id: device_tracker.caitlyn_iphone
+    type: is_not_home
+  action:
+  - service: media_player.turn_on
+    data: {}
+    target:
+      entity_id: media_player.yamaha_amp
+    enabled: false
+  - service: media_player.select_source
+    data:
+      source: spotify
+    target:
+      entity_id: media_player.yamaha_amp
+    enabled: false
+  - service: media_player.select_source
+    data:
+      source: Yamaha Amp
+    target:
+      entity_id: media_player.spotify_trent_braidner
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.spotify_trent_braidner
+    data:
+      media_content_id: spotify:playlist:37i9dQZF1EIV02pzpKNRk8
+      media_content_type: spotify://playlist
+    metadata:
+      title: deadmau5 Mix
+      thumbnail: https://seed-mix-image.spotifycdn.com/v6/img/artist/2CIMQHirSU0MQqyYHq0eOx/en/large
+      media_class: playlist
+      children_media_class: track
+      navigateIds:
+      - {}
+      - media_content_type: spotify://current_user_playlists
+        media_content_id: current_user_playlists
+      - media_content_type: spotify://playlist
+        media_content_id: spotify:playlist:37i9dQZF1EIV02pzpKNRk8
+  - service: media_player.volume_set
+    data:
+      volume_level: 0.65
+    target:
+      entity_id:
+      - media_player.yamaha_amp
+  - service: media_player.media_play
+    data: {}
+    target:
+      entity_id:
+      - media_player.yamaha_amp
+  - service: media_player.select_source
+    data:
+      source: spotify
+    target:
+      entity_id: media_player.yamaha_amp
+  mode: single
+- id: '1659335632394'
+  alias: Sunset Input
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunset
+    offset: -00:45:00
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: 1
+    target:
+      entity_id: input_number.nightime
+  mode: single
+- id: '1659335668769'
+  alias: Sunrise Input
+  description: ''
+  trigger:
+  - platform: sun
+    event: sunrise
+    offset: -00:45:00
+  condition: []
+  action:
+  - service: input_number.set_value
+    data:
+      value: 0
+    target:
+      entity_id: input_number.nightime
+  mode: single
+- id: '1670739946726'
+  alias: Xmas Tree Off at night
+  description: ''
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 13db384985f422fd11fdb63241acd6e0
+    entity_id: switch.xmas_tree_outlet
+    domain: switch
+  mode: single
+- id: '1670739976795'
+  alias: Xmas Tree On in the morning
+  description: ''
+  trigger:
+  - platform: time
+    at: 06:00:00
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 13db384985f422fd11fdb63241acd6e0
+    entity_id: switch.xmas_tree_outlet
+    domain: switch
+  mode: single
+- id: '1672196922987'
+  alias: Holiday
+  description: ''
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  condition: []
+  action:
+  - type: turn_on
+    device_id: 32c52bfc5bceede9749637572824d31a
+    entity_id: light.front_door_light_switch_2
+    domain: light
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.outdoor_spotlights
+    domain: switch
+  - type: turn_on
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  - type: turn_on
+    device_id: 33cb230e0455f79936fc3bc1f60af551
+    entity_id: light.kitchen_light_switch
+    domain: light
+  mode: single
+- id: '1672196972452'
+  alias: Holiday off New Automation
+  description: ''
+  trigger:
+  - platform: time
+    at: '22:00:00'
+  condition: []
+  action:
+  - type: turn_off
+    device_id: 32c52bfc5bceede9749637572824d31a
+    entity_id: light.front_door_light_switch_2
+    domain: light
+  - type: turn_off
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.outdoor_spotlights
+    domain: switch
+  - type: turn_off
+    device_id: 6b4e77bc6ff78dce490ac9cb5d6aec80
+    entity_id: switch.laundry_light
+    domain: switch
+  - type: turn_off
+    device_id: 33cb230e0455f79936fc3bc1f60af551
+    entity_id: light.kitchen_light_switch
+    domain: light
+  mode: single
+- id: '1680414245131'
+  alias: Bathroom Humidity Exhaust Fan
+  description: ''
+  use_blueprint:
+    path: Blackshome/bathroom-humidity-exhaust-fan.yaml
+    input:
+      trigger: sensor.bathroom_temperature_humidity
+      fan_switch:
+        entity_id: switch.bathroom_light_switch_right
+      rising_humidity: 3
+      falling_humidity: -3
+      include_ha_restart: restart_enabled
+- id: '1680414929112'
+  alias: Bathroom Sensor Light
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.motion_bathroom_occupancy_2
+      light_switch:
+        entity_id: light.bathroom_dimmer_light
+      time_delay: 3
+      include_light_control: use_brightness
+      include_bypass: bypass_enabled_stop
+      motion_bypass: switch.bathroom_light_switch_left
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.motion_bathroom_illuminance_lux_2
+      ambient_light_options: ambient_light_option_enabled
+      include_night_lights: night_lights_enabled
+      night_lights:
+        entity_id: light.bathroom_dimmer_light
+      night_light_brightness: 5
+      include_night_light_control: use_night_brightness
+      night_time_delay: 2
+      night_lights_after_time: '22:00:00'
+      night_lights_before_time: 06:00:00
+- id: '1680441415718'
+  alias: Kitchen - Sensor Light
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.motion_kitchen_occupancy_2
+      - binary_sensor.dining_room_occupancy
+      light_switch:
+        entity_id: light.kitchen_light_switch
+      time_delay: 10
+      include_light_control: use_brightness
+      include_bypass: bypass_enabled_stop
+      include_ambient: ambient_enabled
+      ambient_light_sensor: sensor.motion_kitchen_illuminance_lux_2
+      ambient_light_options: ambient_light_option_enabled
+      include_night_lights: night_lights_enabled
+      night_lights:
+        entity_id: light.kitchen_light_switch
+      night_time_delay: 1
+      include_night_light_control: use_night_brightness
+      night_light_brightness: 1
+      night_lights_after_time: '22:00:00'
+      night_lights_before_time: 06:00:00
+- id: '1680443027307'
+  alias: Kitchen - Turn Dishwasher off when complete
+  description: ''
+  use_blueprint:
+    path: leofabri/appliance-status-monitor.yaml
+    input:
+      appliance_socket: switch.dishwasher_outlet
+      appliance_power_sensor: sensor.dishwasher_power
+      appliance_state_machine: input_select.dishwasher_state_machine
+      appliance_job_cycle: input_boolean.dishwasher_job_cycle
+      delayed_job_completion_timer: timer.dishwasher_delayed_job_completion_timer
+      automation_self_trigger: input_boolean.dishwasher_automation_self_trigger
+      delayed_job_completion_duration: 600
+      actions_job_cycle_ends:
+      - type: turn_off
+        device_id: 2eda6f0f05cdffca8ffadbd5a9589e6d
+        entity_id: switch.dishwasher_outlet
+        domain: switch
+- id: '1680443323774'
+  alias: Kitchen - Turn on Dishwasher Socket after Off automation
+  description: 'Turn the dishwasher back on after it was turned off by the job automation.
+
+    This is just to make sure that the blue lights are disabled'
+  trigger:
+  - platform: device
+    type: turned_off
+    device_id: 2eda6f0f05cdffca8ffadbd5a9589e6d
+    entity_id: switch.dishwasher_outlet
+    domain: switch
+  condition: []
+  action:
+  - delay:
+      hours: 0
+      minutes: 5
+      seconds: 0
+      milliseconds: 0
+  - type: turn_on
+    device_id: 2eda6f0f05cdffca8ffadbd5a9589e6d
+    entity_id: switch.dishwasher_outlet
+    domain: switch
+  mode: single

@@ -1,0 +1,443 @@
+- id: '1624316725960'
+  name: Office White
+  entities:
+    light.office:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 44.211
+      - 22.353
+      rgb_color:
+      - 255
+      - 240
+      - 198
+      xy_color:
+      - 0.37
+      - 0.372
+      entity_id:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf
+      icon: mdi:lightbulb-group
+      friendly_name: Office
+      supported_features: 44
+      state: 'on'
+    light.office_lamp:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 42.162
+      - 14.51
+      rgb_color:
+      - 255
+      - 244
+      - 218
+      xy_color:
+      - 0.353
+      - 0.356
+      color:
+        x: 0.353
+        y: 0.356
+      linkquality: 72
+      update:
+        state: idle
+      update_available: false
+      icon: hue:bulb-sultan
+      friendly_name: Office Lamp
+      supported_features: 63
+      state: 'on'
+    input_select.scene_status:
+      options:
+      - none
+      - Office White
+      - Stream Time
+      - Office Low Light
+      - Office - Off
+      editable: false
+      state: Office White
+  icon: mdi:lightbulb-multiple
+- id: '1633405674413'
+  name: Stream Time
+  entities:
+    light.left_light:
+      min_mireds: 143
+      max_mireds: 344
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 23
+      color_temp: 277
+      hs_color:
+      - 27.07
+      - 42.435
+      rgb_color:
+      - 255
+      - 195
+      - 146
+      xy_color:
+      - 0.447
+      - 0.372
+      friendly_name: Left Light
+      supported_features: 0
+      state: 'on'
+    light.right_light:
+      min_mireds: 143
+      max_mireds: 344
+      supported_color_modes:
+      - color_temp
+      color_mode: color_temp
+      brightness: 23
+      color_temp: 277
+      hs_color:
+      - 27.07
+      - 42.435
+      rgb_color:
+      - 255
+      - 195
+      - 146
+      xy_color:
+      - 0.447
+      - 0.372
+      friendly_name: Right Light
+      supported_features: 0
+      state: 'on'
+    light.office:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 258.118
+      - 100
+      rgb_color:
+      - 77
+      - 0
+      - 255
+      xy_color:
+      - 0.162
+      - 0.052
+      entity_id:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf
+      icon: mdi:lightbulb-group
+      friendly_name: Office
+      supported_features: 44
+      state: 'on'
+    light.office_lamp:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 330.14
+      - 84.314
+      rgb_color:
+      - 255
+      - 40
+      - 147
+      xy_color:
+      - 0.547
+      - 0.237
+      color:
+        x: 0.547
+        y: 0.237
+      linkquality: 72
+      update:
+        state: idle
+      update_available: false
+      icon: hue:bulb-sultan
+      friendly_name: Office Lamp
+      supported_features: 63
+      state: 'on'
+    input_select.scene_status:
+      options:
+      - none
+      - Office White
+      - Stream Time
+      - Office Low Light
+      - Office - Off
+      editable: false
+      state: Stream Time
+  icon: mdi:twitch
+- id: '1636343914689'
+  name: Office - Off
+  entities:
+    light.office:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      entity_id:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf
+      icon: mdi:lightbulb-group
+      friendly_name: Office
+      supported_features: 44
+      state: 'off'
+    light.office_lamp:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color:
+        x: 0.353
+        y: 0.356
+      linkquality: 126
+      update:
+        state: idle
+      update_available: false
+      icon: hue:bulb-sultan
+      friendly_name: Office Lamp
+      supported_features: 63
+      state: 'off'
+    light.left_light:
+      min_mireds: 143
+      max_mireds: 344
+      supported_color_modes:
+      - color_temp
+      friendly_name: Left Light
+      supported_features: 0
+      state: 'off'
+    light.right_light:
+      min_mireds: 143
+      max_mireds: 344
+      supported_color_modes:
+      - color_temp
+      friendly_name: Right Light
+      supported_features: 0
+      state: 'off'
+    switch.strip_lights:
+      friendly_name: Strip lights
+      state: 'off'
+    input_select.scene_status:
+      options:
+      - none
+      - Office White
+      - Stream Time
+      - Office Low Light
+      - Office - Off
+      editable: false
+      state: Office - Off
+  icon: mdi:lightbulb-multiple-off-outline
+- id: '1636629976872'
+  name: Office Low Light
+  entities:
+    light.office_lamp:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - okay
+      - channel_change
+      - finish_effect
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 127
+      color_temp: 371
+      hs_color:
+      - 28.406
+      - 65.883
+      rgb_color:
+      - 255
+      - 166
+      - 86
+      xy_color:
+      - 0.527
+      - 0.388
+      color:
+        x: 0.4607
+        y: 0.4108
+      linkquality: 72
+      update:
+        state: idle
+      update_available: false
+      icon: hue:bulb-sultan
+      friendly_name: Office Lamp
+      supported_features: 63
+      state: 'on'
+    light.office:
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      color_mode: color_temp
+      brightness: 105
+      color_temp: 370
+      hs_color:
+      - 28.391
+      - 65.659
+      rgb_color:
+      - 255
+      - 166
+      - 87
+      xy_color:
+      - 0.526
+      - 0.387
+      entity_id:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf
+      icon: mdi:lightbulb-group
+      friendly_name: Office
+      supported_features: 44
+      state: 'on'
+    switch.strip_lights:
+      friendly_name: Strip lights
+      state: 'on'
+    input_select.scene_status:
+      options:
+      - none
+      - Office White
+      - Stream Time
+      - Office Low Light
+      - Office - Off
+      editable: false
+      state: Office Low Light
+  icon: mdi:weather-night
+- id: '1680415063521'
+  name: Office Work Day
+  entities:
+    light.office:
+      min_color_temp_kelvin: 2000
+      max_color_temp_kelvin: 6666
+      min_mireds: 150
+      max_mireds: 500
+      effect_list:
+      - blink
+      - breathe
+      - channel_change
+      - finish_effect
+      - okay
+      - stop_effect
+      supported_color_modes:
+      - color_temp
+      - xy
+      entity_id:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf
+      icon: mdi:lightbulb-group
+      friendly_name: Office
+      supported_features: 44
+      color_mode: xy
+      brightness: 255
+      hs_color:
+      - 42.162
+      - 14.51
+      rgb_color:
+      - 255
+      - 244
+      - 218
+      xy_color:
+      - 0.353
+      - 0.356
+      state: 'on'
+    cover.office_blinds:
+      current_position: 0
+      battery: 87
+      charging_status: false
+      illuminance: 0
+      illuminance_lux: 0
+      linkquality: 196
+      motor_state: rising
+      operation_mode: command
+      position: 0
+      running: true
+      temperature: 20
+      update:
+        state: idle
+      update_available: false
+      friendly_name: Office Blinds
+      supported_features: 15
+      state: opening
+    switch.speakers_outlet:
+      device_class: outlet
+      friendly_name: Speakers - outlet
+      state: 'on'
+  icon: mdi:office-building
+  metadata:
+    light.office:
+      entity_only: true
+    cover.office_blinds:
+      entity_only: true
+    switch.speakers_outlet:
+      entity_only: true

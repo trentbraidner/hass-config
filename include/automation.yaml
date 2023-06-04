@@ -1,0 +1,179 @@
+automation:
+  - alias: homeassistant_start
+    id: "7426848686945"
+    initial_state: true
+    trigger:
+      - platform: homeassistant
+        event: start
+    action:
+      - service: browser_mod.close_popup
+      - delay:
+          seconds: 1
+      - service: frontend.reload_themes
+      - delay:
+          seconds: 10
+      - choose:
+          - conditions:
+              - condition: state
+                entity_id:
+                  - media_player.lounge
+                  - media_player.htpc_2
+                  - media_player.spotify_trent_braidner
+                  - media_player.bathroom
+                state: "off"
+            sequence:
+              - service: input_select.select_option
+                target:
+                  entity_id: input_select.conditional_media
+                data:
+                  option: Last downloaded
+      - delay:
+          seconds: 10
+
+  - alias: lovelace_updated_ignore
+    id: "9381519720051"
+    mode: restart
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: lovelace_updated
+    action:
+      - service: browser_mod.toast
+        data:
+          duration: 1
+          message: " "
+
+  - alias: clear_log_filesize
+    id: "3331821824310"
+    initial_state: true
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.home_assistant_log
+        above: 200
+    action:
+      - service: shell_command.ha_purge_logs
+
+  ####################################################
+  #                                                  #
+  #                      LIGHTS                      #
+  #                                                  #
+  ####################################################
+  ####################################################
+  #                                                  #
+  #                  NOTIFICATIONS                   #
+  #                                                  #
+  ####################################################
+  - alias: ios_notify_hass_update
+    id: "7958228563778"
+    trigger:
+      - platform: state
+        entity_id: sensor.hass_version_installed_2
+      - platform: state
+        entity_id: sensor.hass_version_latest
+    condition:
+      - condition: template
+        value_template: >
+          {% set installed = states('sensor.hass_version_installed') %}
+          {% set latest = states('sensor.hass_version_latest') %}
+          {{ installed != 'unknown' and installed != 'unavailable' and installed != 'none' and 
+          latest != 'unknown' and latest != 'unavailable' and latest != 'none' and installed != latest }}
+    action:
+      - service: notify.mobile_app_trent_iphone
+        data:
+          title: >
+            {{ states('sensor.hass_version_latest') }} tillgänglig {{ '\U0001F389' }}
+          message: Håll in för att uppdatera
+          data:
+            data:
+              url: https://www.home-assistant.io/latest-release-notes/
+            push:
+              category: ios_hass
+      - service: homeassistant.update_entity
+        target:
+          entity_id:
+            - sensor.hass_release_notes
+            - sensor.hass_release_notes_rc
+
+    ####################################################
+    #                                                  #
+    #                  SCAN INTERVAL                   #
+    #                                                  #
+    ####################################################
+
+  - alias: hacs_sensor_refresh
+    id: "2001123854555"
+    initial_state: true
+    trigger:
+      - platform: event
+        event_type: hacs/repository
+        event_data:
+          action: install
+    action:
+      - delay:
+          seconds: 4
+      - service: homeassistant.update_entity
+        target:
+          entity_id: sensor.hacs
+
+    ####################################################
+    #                                                  #
+    #                       FAN 1                      #
+    #                                                  #
+    ####################################################
+
+    ####################################################
+    #                                                  #
+    #                      TABLET                      #
+    #                                                  #
+    ####################################################
+
+    ####################################################
+    #                                                  #
+    #                    HDMI / TV                     #
+    #                                                  #
+    ####################################################
+
+    ####################################################
+    #                                                  #
+    #                  LAUNDRY TIMER                   #
+    #                                                  #
+    ####################################################
+
+    ####################################################
+    #                                                  #
+    #                   PERSISTENCE                    #
+    #                                                  #
+    ####################################################
+
+  - alias: person_home
+    id: "8423590985012"
+    initial_state: true
+    trigger:
+      - platform: state
+        entity_id:
+          - person.trent
+          - person.caitlyn
+        from:
+          - home
+          - not_home
+        to:
+          - home
+          - not_home
+    action:
+      - choose:
+          - conditions: >
+              {{ trigger.entity_id == 'person.trent' }}
+            sequence:
+              - service: mqtt.publish
+                data:
+                  topic: homeassistant/persistence/trent
+                  payload_template: >
+                    {{ now() }}
+                  retain: true
+        default:
+          - service: mqtt.publish
+            data:
+              topic: homeassistant/persistence/caitlyn
+              payload_template: >
+                {{ now() }}
+              retain: true

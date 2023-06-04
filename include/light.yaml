@@ -1,0 +1,14 @@
+light:
+  - platform: group
+    name: Keylights
+    entities:
+      - light.left_light
+      - light.right_light
+
+  - platform: group
+    name: Office
+    entities:
+      - light.office_light_lf
+      - light.office_light_rb
+      - light.office_light_lb
+      - light.office_light_rf

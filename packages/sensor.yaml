@@ -1,0 +1,352 @@
+sensor:
+  - platform: uptime
+
+  - platform: dnsip
+
+  - platform: template
+    sensors:
+      wandin_current_temp:
+        value_template: "{{ state_attr('weather.wandin_north', 'temperature') }}"
+        unit_of_measurement: "°C"
+
+  ##Presense
+
+  - platform: mqtt_room
+    name: "Trents iPhone ESPresenseDevice"
+    device_id: "apple:iphone14-3"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Trents Watch ESPresenseDevice"
+    device_id: "apple:watch4-4"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Caitlyns Watch ESPresenseDevice"
+    device_id: "apple:watch3-4"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Caitlyns iPhone ESPresenseDevice"
+    device_id: "apple:1006:10-7"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+
+  - platform: twitch
+    client_id: !secret twitch_id
+    client_secret: !secret twitch_secret
+    token: !secret twitch_token
+    channels:
+      - TrentAU
+      - Evasion_GG
+
+  - platform: mqtt
+    name: trent_last_changed
+    state_topic: homeassistant/persistence/trent
+    value_template: >
+      {{ value | replace(' ', 'T') }}
+
+  - platform: mqtt
+    name: caitlyn_last_changed
+    state_topic: homeassistant/persistence/caitlyn
+    value_template: >
+      {{ value | replace(' ', 'T') }}
+
+  - platform: mqtt
+    name: mailbox
+    state_topic: homeassistant/persistence/mailbox
+
+  - platform: template
+    sensors:
+      washer_door_lock:
+        friendly_name: "Washer Door Lock"
+        value_template: "{{ state_attr('sensor.washerdryer','door_lock') }}"
+
+      washer_time_display:
+        friendly_name: "Washer Time Display"
+        value_template: >
+          {% if is_state('sensor.washerdryer_run_state', '-') %}
+          {% elif is_state('sensor.washerdryer_run_state', 'Standby') %}
+            -:--
+          {% else %}
+            {{ state_attr('sensor.washerdryer', 'remain_time') }}
+          {% endif %}
+      dryer_time_display:
+        friendly_name: "Dryer Time Display"
+        value_template: >
+          {% if is_state('sensor.washerdryer_run_state', '-') %}
+          {% elif is_state('sensor.washerdryer_run_state', 'Standby') %}
+            -:--
+          {% else %}
+            {{ state_attr('sensor.washerdryer', 'remain_time') }}
+          {% endif %}
+
+      blank:
+        friendly_name: "Blank Sensor"
+        value_template: ""
+
+  # - platform: hp_ilo
+  #   host: 192.168.1.237
+  #   username: !secret ilo_user
+  #   password: !secret ilo_pass
+  #   monitored_variables:
+  #     - name: power_status
+  #       sensor_type: server_power_status
+  #     - name: uid_status
+  #       sensor_type: server_uid_status
+  #     # - name: Server Health
+  #     #   sensor_type: server_health
+  #     #   value_template: "{{ ilo_data.health_at_a_glance }}"
+
+  #     - name: bios_hardware
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['bios_hardware']['status'] }}"
+  #     - name: CPU fanspeed
+  #       sensor_type: server_health
+  #       unit_of_measurement: "%"
+  #       value_template: '{{ ilo_data.fans["Fan 1"].speed[0] }}'
+  #     - name: fan_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['fans']['status'] }}"
+
+  #     - name: memory_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['memory']['status'] }}"
+
+  #     - name: network_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['network']['status'] }}"
+
+  #     - name: processor_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['processor']['status'] }}"
+
+  #     - name: storage_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['storage']['status'] }}"
+
+  #     - name: temperature_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.health_at_a_glance['temperature']['status'] }}"
+
+  #     - name: memory_cpu1_sockets
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['number_of_sockets'] }}"
+
+  #     - name: memory_cpu1_frequency
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['operating_frequency'] }}"
+
+  #     - name: memory_cpu1_voltage
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['operating_voltage'] }}"
+
+  #     - name: memory_cpu1_size
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['total_memory_size'] }}"
+
+  #     - name: memory_cpu2_sockets
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['number_of_sockets'] }}"
+
+  #     - name: memory_cpu2_frequency
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['operating_frequency'] }}"
+
+  #     - name: memory_cpu2_voltage
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['operating_voltage'] }}"
+
+  #     - name: memory_cpu2_size
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['total_memory_size'] }}"
+  #     - name: nic_ilo_ip_address
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['ip_address'] }}"
+
+  #     - name: nic_ilo_mac
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['mac_address'] }}"
+
+  #     - name: nic_ilo_status
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['status'] }}"
+
+  #     - name: psu_summary
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.power_supply_summary['present_power_reading'] }}"
+
+  #     - name: temperature_inlet
+  #       sensor_type: server_health
+  #       unit_of_measurement: "°C"
+  #       value_template: "{{ ilo_data.temperature['01-Inlet Ambient']['currentreading'] }}"
+
+  #     - name: temperature_cpu1_
+  #       sensor_type: server_health
+  #       unit_of_measurement: "°C"
+  #       value_template: "{{ ilo_data.temperature['02-CPU 1']['currentreading'] }}"
+  #     - name: temperature_cpu2_
+  #       sensor_type: server_health
+  #       unit_of_measurement: "°C"
+  #       value_template: "{{ ilo_data.temperature['03-CPU 2']['currentreading'] }}"
+
+  #     - name: processors_cores
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.processors['Proc 1']['execution_technology'] }}"
+
+  #     - name: processors_name
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.processors['Proc 1']['name'] }}"
+
+  #     - name: processors_speed
+  #       sensor_type: server_health
+  #       value_template: "{{ ilo_data.processors['Proc 1']['speed'] }}"
+
+  # - platform: template
+  #   sensors:
+  #     roof_door_ypos:
+  #       value_template: >-
+  #         {{ state_attr('sensor.roof_door_action','angle_y_absolute') | int }}
+  #       unit_of_measurement: "°"
+  #       friendly_name: "Roof Door Y Angle"
+  #       icon_template: >-
+  #         {% if state_attr('sensor.roof_door_action','angle_y_absolute') | int < 40 %}
+  #           mdi:door-closed
+  #         {% else %}
+  #           mdi:door-open
+  #         {% endif %}
+
+      #   luke_cgm_sgv:
+      #     value_template: >
+      #       {{ states('sensor.luke_cgm') | regex_findall_index("sgv:(\d+)") }}
+      #     unit_of_measurement: "mmol"
+      # #   luke_cgm_trend:
+      # #     value_template: >
+      # #       {{ states('sensor.luke_cgm') | regex_findall_index("trend:(\d+)") }}
+      #   luke_cgm_direction:
+      #     value_template: >
+      #       {{ states('sensor.luke_cgm') | regex_findall_index("direction:(\w+)") }}
+      #   luke_cgm_time:
+      #     value_template: >
+      #       {{ states('sensor.luke_cgm') | regex_findall_index("time:(\d+)") }}
+      #   luke_cgm_sgv_mmol:
+      #     value_template: >
+      #       {%- set mgdl = states('sensor.luke_cgm_sgv') | float %}
+      #       {%- set mmol = (mgdl / 18) %}
+      #       {{ mmol | float | round(1)}}
+      #     unit_of_measurement: "mmol/L"
+      #     device_class: temperature
+      #     friendly_name: "Sugar Level"
+      #     icon_template: >-
+      #       {%- set mgdl = states('sensor.luke_cgm_sgv') | float %}
+      #       {%- set mmol = (mgdl / 18) %}
+      #       {% if mmol < 4 %}
+      #         mdi:arrow-up-bold
+      #       {% else %}
+      #         {% if mmol > 8 %}
+      #           mdi:arrow-up-bold
+      #         {% else %}
+      #           mdi:water
+      #         {% endif %}
+      #       {% endif %}
+
+      #   luke_inslulin:
+      #     value_template: >
+      #       {{ states('sensor.luke_treatments') | regex_findall_index("insulin:(\d+)") }}
+      #     unit_of_measurement: "units"
+
+      #   luke_carbs:
+      #     value_template: >
+      #       {{ states('sensor.luke_treatments') | regex_findall_index("carbs:(\d+)") }}
+      #     unit_of_measurement: "g"
+
+      ## to get the current view of my tablet for UI automations
+      tablet_view:
+        value_template: "{{ states.sensor.tablet.attributes['path'] | default('/lovelace/0') }}"
+        friendly_name: Tablet View
+
+      ## Calculates daylight brightness out of 100%
+      sunlight_pct:
+        value_template: >-
+          {%- set elevation = state_attr('sun.sun','elevation') | float %}
+          {%- set cloud_coverage = states('sensor.dark_sky_cloud_coverage') | float %}
+          {%- set cloud_factor = (1 - (0.75 * ( cloud_coverage / 100) ** 3 )) %}
+          {%- set min_elevation = -6 %}
+          {%- set max_elevation = 90 %}
+          {%- set adjusted_elevation = elevation - min_elevation %}
+          {%- set adjusted_elevation = [adjusted_elevation,0] | max %}
+          {%- set adjusted_elevation = [adjusted_elevation,max_elevation - min_elevation] | min %}
+          {%- set adjusted_elevation = adjusted_elevation / (max_elevation - min_elevation) %}
+          {%- set adjusted_elevation = adjusted_elevation %}
+          {%- set adjusted_elevation = adjusted_elevation * 100 %}
+          {%- set brightness = adjusted_elevation * cloud_factor %}
+          {{ brightness | round }}
+        unit_of_measurement: "%"
+        device_class: "illuminance"
+
+      ## Daylight brightness converted to opacity for CSS
+      sunlight_opacity:
+        value_template: >-
+          {%- set sunpct = states('sensor.sunlight_pct') | float %}
+          {%- set opacity = sunpct / 100 | float %}
+          {{ opacity }}
+      ## Converts time and date into sentence for UI
+      day:
+        value_template: >
+          {% set days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] %}
+          {{ strptime(states('sensor.date'), '%Y-%m-%d').day }}
+          {{ days[now().weekday()] }}
+      month:
+        value_template: >
+          {% set months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+          {{ strptime(states('sensor.date'), '%Y-%m-%d').day }}
+          {{ months[now().month-1] }}
+      date_string:
+        friendly_name: "Full Date"
+        value_template: "{{ states('sensor.day') }}, {{ states('sensor.month') }} {{ now().year }}"
+
+      # ## Vaccuum templates, for showing attributes as sensors, etc.
+
+      # vacuum_status:
+      #   friendly_name: "Vacuum - Status"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.status }}"
+
+      # vacuum_cleaning_status:
+      #   friendly_name: "Vacuum - Cleaning Status"
+      #   value_template: "Cleaning {{ states('input_text.room_cleaning') }}"
+
+      # vacuum_battery:
+      #   friendly_name: "Vacuum - Battery"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.battery_level }}"
+      #   device_class: battery
+      #   unit_of_measurement: "%"
+
+      # vacuum_fan:
+      #   friendly_name: "Vacuum - Fan Speed"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.fan_speed }}"
+
+      # vacuum_battery_icon:
+      #   friendly_name: "Vacuum - Battery Icon"
+      #   icon_template: "{{ states.vacuum.roborock_s7.attributes.battery_icon }}"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.battery_icon }}"
+
+      # vacuum_cleaning_time:
+      #   friendly_name: "Vacuum - Cleaning Time"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.cleaning_time }}"
+
+      # vacuum_cleaned_area:
+      #   friendly_name: "Vacuum - Cleaned Area"
+      #   value_template: "{{ states.vacuum.roborock_s7.attributes.cleaned_area }}"
+
+binary_sensor:
+  - platform: ping
+    name: nas_internet_access
+    host: 8.8.8.8
+  - platform: tod
+    name: Night
+    after: sunset
+    before: sunrise

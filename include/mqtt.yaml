@@ -1,0 +1,43 @@
+mqtt:
+  - platform: mqtt
+    name: trent_last_changed
+    state_topic: homeassistant/persistence/trent
+    value_template: >
+      {{ value | replace(' ', 'T') }}
+
+  - platform: mqtt
+    name: caitlyn_last_changed
+    state_topic: homeassistant/persistence/caitlyn
+    value_template: >
+      {{ value | replace(' ', 'T') }}
+
+  - platform: mqtt
+    name: mailbox
+    state_topic: homeassistant/persistence/mailbox
+
+  ##Presense
+
+  - platform: mqtt_room
+    name: "Trents iPhone ESPresenseDevice"
+    device_id: "apple:iphone14-3"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Trents Watch ESPresenseDevice"
+    device_id: "apple:watch4-4"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Caitlyns Watch ESPresenseDevice"
+    device_id: "apple:watch3-4"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120
+  - platform: mqtt_room
+    name: "Caitlyns iPhone ESPresenseDevice"
+    device_id: "apple:1006:10-7"
+    state_topic: "espresense/rooms"
+    timeout: 5
+    away_timeout: 120

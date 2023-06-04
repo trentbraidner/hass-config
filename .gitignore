@@ -12,6 +12,23 @@ custom_components/
 www/community/
 www/fonts/
 www/Plex_Recently_Added/
+zigbee2mqtt/
+node-red/
+appdaemon/
+image/
+esphome/
+tts/
+
+frigate.yml
+cast.sh
+configuration.yaml.bak
+secrets.yaml.bak
+watchman_report.txt
+aircast.xml
 
 *.code-workspace
 home-assistant.log*
+
+
+home-assistant_v2.db
+home-assistant_v2.db*
