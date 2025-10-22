@@ -5,25 +5,6 @@ homeassistant:
     sensor.processor_use_percent:
       icon: mdi:chip
 
-sensor:
-  - platform: systemmonitor
-    resources:
-      - type: disk_use_percent
-        arg: /
-      - type: memory_use_percent
-      - type: processor_use
-      - type: last_boot
-    scan_interval: 120
-
-  # # https://github.com/NemesisRE/sensor.plex_recently_added
-  # - platform: plex_recently_added
-  #   host: !secret nas_host
-  #   port: !secret plex_port
-  #   token: !secret plex_token
-  #   max: 1
-  #   img_dir: /
-  #   image_resolution: 800
-
 template:
   - sensor:
       # - unique_id: nas_status
@@ -78,7 +59,7 @@ template:
 
 automation:
   - alias: purge_log_filesize
-    id: '3331821824310'
+    id: "3331821824310"
     trigger:
       platform: numeric_state
       entity_id: sensor.home_assistant_log_size

@@ -102,84 +102,20 @@
 - id: '1650555484058'
   alias: Open blinds
   description: ''
-  trigger:
-  - platform: time
-    at: 08:30:00
-  condition:
+  triggers:
+  - at: 08:30:00
+    trigger: time
+  conditions:
   - condition: device
     device_id: 63723d6717b32a57d7b36d0c7b306a60
     domain: cover
     entity_id: cover.bedroom_blinds
     type: is_closed
-  action:
+  actions:
   - device_id: 63723d6717b32a57d7b36d0c7b306a60
     domain: cover
-    entity_id: cover.bedroom_blinds
-    type: set_position
-    position: 100
-  mode: single
-- id: '1658241023915'
-  alias: Alarm
-  description: ''
-  trigger:
-  - platform: time
-    at: 08:30:00
-  condition:
-  - condition: device
-    device_id: e25e7d4d6e6f81fb9997fe247cb739f6
-    domain: device_tracker
-    entity_id: device_tracker.caitlyn_iphone
-    type: is_not_home
-  action:
-  - service: media_player.turn_on
-    data: {}
-    target:
-      entity_id: media_player.yamaha_amp
-    enabled: false
-  - service: media_player.select_source
-    data:
-      source: spotify
-    target:
-      entity_id: media_player.yamaha_amp
-    enabled: false
-  - service: media_player.select_source
-    data:
-      source: Yamaha Amp
-    target:
-      entity_id: media_player.spotify_trent_braidner
-  - service: media_player.play_media
-    target:
-      entity_id: media_player.spotify_trent_braidner
-    data:
-      media_content_id: spotify:playlist:37i9dQZF1EIV02pzpKNRk8
-      media_content_type: spotify://playlist
-    metadata:
-      title: deadmau5 Mix
-      thumbnail: https://seed-mix-image.spotifycdn.com/v6/img/artist/2CIMQHirSU0MQqyYHq0eOx/en/large
-      media_class: playlist
-      children_media_class: track
-      navigateIds:
-      - {}
-      - media_content_type: spotify://current_user_playlists
-        media_content_id: current_user_playlists
-      - media_content_type: spotify://playlist
-        media_content_id: spotify:playlist:37i9dQZF1EIV02pzpKNRk8
-  - service: media_player.volume_set
-    data:
-      volume_level: 0.65
-    target:
-      entity_id:
-      - media_player.yamaha_amp
-  - service: media_player.media_play
-    data: {}
-    target:
-      entity_id:
-      - media_player.yamaha_amp
-  - service: media_player.select_source
-    data:
-      source: spotify
-    target:
-      entity_id: media_player.yamaha_amp
+    entity_id: d8433435b837e83ca8b89bdc3c1c6ff6
+    type: open
   mode: single
 - id: '1659335632394'
   alias: Sunset Input
@@ -287,18 +223,6 @@
     entity_id: light.kitchen_light_switch
     domain: light
   mode: single
-- id: '1680414245131'
-  alias: Bathroom Humidity Exhaust Fan
-  description: ''
-  use_blueprint:
-    path: Blackshome/bathroom-humidity-exhaust-fan.yaml
-    input:
-      trigger: sensor.bathroom_temperature_humidity
-      fan_switch:
-        entity_id: switch.bathroom_light_switch_right
-      rising_humidity: 3
-      falling_humidity: -3
-      include_ha_restart: restart_enabled
 - id: '1680414929112'
   alias: Bathroom Sensor Light
   description: ''
@@ -314,7 +238,7 @@
       include_bypass: bypass_enabled_stop
       motion_bypass: switch.bathroom_light_switch_left
       include_ambient: ambient_enabled
-      ambient_light_sensor: sensor.motion_bathroom_illuminance_lux_2
+      ambient_light_sensor: sensor.motion_bathroom_illuminance
       ambient_light_options: ambient_light_option_enabled
       include_night_lights: night_lights_enabled
       night_lights:
@@ -389,4 +313,66 @@
     device_id: 2eda6f0f05cdffca8ffadbd5a9589e6d
     entity_id: switch.dishwasher_outlet
     domain: switch
+  mode: single
+- id: '1699417009166'
+  alias: Low battery level detection & notification for all battery sensors
+  description: ''
+  use_blueprint:
+    path: sbyx/low-battery-level-detection-notification-for-all-battery-sensors.yaml
+    input:
+      actions:
+      - service: notify.mobile_app_trent_iphone
+        data:
+          message: '{{sensors}}'
+- id: '1709603094246'
+  alias: Sensor Light - Laundry
+  description: ''
+  use_blueprint:
+    path: Blackshome/sensor-light.yaml
+    input:
+      motion_trigger:
+      - binary_sensor.motion_office_occupancy_2
+      light_switch:
+        entity_id: switch.laundry_light
+      include_light_control: dont_use_brightness
+      include_bypass: bypass_disabled
+      include_sun: sun_disabled
+      include_ambient: ambient_disabled
+      ambient_light_sensor: sensor.motion_office_illuminance_lux_2
+      ambient_light_options: ambient_light_option_enabled
+      include_night_lights: night_lights_disabled
+      time_delay: 2
+- id: '1756862524216'
+  alias: Chase lamp on
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - light.chase_bedroom_light_switch
+    from: 'off'
+    to: 'on'
+  conditions: []
+  actions:
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.smart_switch_25060314760007513801c4e7ae178560_outlet
+  mode: single
+- id: '1756862576567'
+  alias: chase lamp off
+  description: ''
+  triggers:
+  - trigger: state
+    entity_id:
+    - light.chase_bedroom_light_switch
+    from: 'on'
+    to: 'off'
+  conditions: []
+  actions:
+  - action: switch.turn_off
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.smart_switch_25060314760007513801c4e7ae178560_outlet
   mode: single

@@ -1,0 +1,25 @@
+# continuously_casting_dashboards:
+#   logging_level: warning #Required: Set the logging level - debug/info/warning (default is 'warning' - try 'debug' for debugging)
+#   cast_delay: 45 #Required: Time (in seconds) for casting checks between each device.
+#   #start_time: "07:00" #Optional: Global start time of the casting window (format: "HH:MM") - Default is set to "07:00" and can be individually overwritten per device below.
+#   #end_time: "01:00" #Optional: Global end time of the casting window (format: "HH:MM") and must be after "00:00". Default is set to "01:00" and can be individually overwritten per device below.
+#   devices:
+#     "Kitchen Display": #Required: Display name of your device. Find this on the actual device's settings or inside the Google Home app.
+#       - dashboard_url: "http://192.168.1.5:5050/?view=Home&menu=false" #Required: Dashboard URL to be casted (This must be the local IP address of your HA instance, not homeassistant.local)
+#         volume: 3 #Optional: Volume to set the display. (If you remove this, the device will remain the same volume)
+#         start_time: "07:00" #Optional: Set the start time for this device
+#         end_time: "22:00" #Optional: Set the end time for this device
+#       - dashboard_url: "http://192.168.1.5:5050/?view=Home&menu=false" #Required: Dashboard URL to be casted (This must be the local IP address of your HA instance, not homeassistant.local)
+#         volume: 0 #Optional: Volume to set the display. (If you remove this, the device will remain the same volume)
+#         start_time: "22:00" #Optional: Set the start time for this device
+#         end_time: "06:59" #Optional: Set the end time for this device
+#     "Bedroom Display": #Required: Display name of your device. Find this on the actual device's settings or inside the Google Home app.
+#       - dashboard_url: "http://192.168.1.5:5050/?view=Bedroom&menu=false" #Required: Dashboard URL to be casted (This must be the local IP address of your HA instance, not homeassistant.local)
+#         volume: 5 #Optional: Volume to set the display. (If you remove this, the device will remain the same volume)
+#         start_time: "07:00" #Optional: Set the start time for this device
+#         end_time: "20:00" #Optional: Set the end time for this device
+#     # "<Display_Name>":
+#     #   - dashboard_url: "<Dashboard_URL>"
+#     #     volume: <Volume>
+#     #     start_time: "<Start_Time>"
+#     #     end_time: "<End_Time>"

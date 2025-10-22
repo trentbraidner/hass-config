@@ -1,0 +1,14 @@
+{
+  "Kitchen Display_192.168.1.174": {
+    "first_seen": "2025-10-22T07:45:35.850616",
+    "connection_attempts": 0,
+    "successful_connections": 0,
+    "disconnections": 0,
+    "reconnect_attempts": 1,
+    "successful_reconnects": 1,
+    "failed_reconnects": 0,
+    "uptime_seconds": 0,
+    "last_connection": "2025-10-22T07:46:00.871942",
+    "last_disconnection": null
+  }
+}

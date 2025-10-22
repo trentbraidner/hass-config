@@ -1,0 +1,52 @@
+mqtt:
+  host: 192.168.1.5
+  user: trent
+  password: Zerocoo1!*1512
+
+
+ffmpeg:
+  hwaccel_args:
+    - -hwaccel
+    - qsv
+    - -qsv_device
+    - /dev/dri/renderD128
+detectors:
+  coral:
+    type: edgetpu
+    device: pci
+
+objects:
+  track:
+    - person
+    - car
+    - truck
+    - cat
+    - dog
+  filters:
+    person:
+      min_area: 0
+      max_area: 24000000
+      min_score: 0.3
+      threshold: 0.7
+
+
+cameras:
+  camera_1: # <------ Name the camera
+    ffmpeg:
+      inputs:
+        - path: http://192.168.1.94:56000/mjpeg # <----- Update for your camera
+          roles:
+            - detect
+            - record
+            - clips
+            - rtmp
+      input_args: -avoid_negative_ts make_zero -fflags nobuffer -flags low_delay -strict
+        experimental -fflags +genpts+discardcorrupt -use_wallclock_as_timestamps 1
+      output_args:
+        record: -f segment -segment_time 10 -segment_format mp4 -reset_timestamps
+          1 -strftime 1 -c:v libx264 -an
+    detect:
+      width: 1280 # <---- update for your camera's resolution
+      height: 720 # <---- update for your camera's resolution
+      fps: 5
+version: 0.14

@@ -1,14 +1,49 @@
 sensor:
-  - platform: uptime
-
-  - platform: dnsip
-
   - platform: template
     sensors:
       wandin_current_temp:
         value_template: "{{ state_attr('weather.wandin_north', 'temperature') }}"
         unit_of_measurement: "°C"
+  - platform: template
+    sensors:
+      lumo_energyprice:
+        friendly_name: Lumo Tariff
+        unit_of_measurement: "AUD/kWh"
+        value_template: >
+          {% set tariff = { "Peak": 0.37389, "OffPeak": 0.1782 } %}
+          {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
+          {%if (time.hour >= 15) and (time.hour < 21) %}
+            {{ tariff.Peak }}
+          {%else%}
+            {{ tariff.OffPeak }}
+          {%endif%}
 
+  - platform: template
+    sensors:
+      lumo_solarexport:
+        friendly_name: Lumo Solar Tariff Solar Export
+        unit_of_measurement: "AUD/kWh"
+        value_template: 0.045
+  - platform: template
+    sensors:
+      ovo_energyprice:
+        friendly_name: OVO Tariff
+        unit_of_measurement: "AUD/kWh"
+        value_template: >
+          {% set tariff = { "Peak": 0.3608, "OffPeak": 0.1936 } %}
+          {% set time = { "month": (now().strftime('%m') | int), "hour": (now().strftime('%H') | int), "weekday": (now().weekday() | int ) } %}
+          {%if (time.hour >= 15) and (time.hour < 21) %}
+            {{ tariff.Peak }}
+          {%else%}
+            {{ tariff.OffPeak }}
+          {%endif%}
+
+  - platform: template
+    sensors:
+      ovo_solarexport:
+        friendly_name: OVO Solar Tariff Solar Export
+        unit_of_measurement: "AUD/kWh"
+        value_template: 0.010
   ##Presense
 
   - platform: mqtt_room
@@ -36,13 +71,13 @@ sensor:
     timeout: 5
     away_timeout: 120
 
-  - platform: twitch
-    client_id: !secret twitch_id
-    client_secret: !secret twitch_secret
-    token: !secret twitch_token
-    channels:
-      - TrentAU
-      - Evasion_GG
+  # - platform: twitch
+  #   client_id: !secret twitch_id
+  #   client_secret: !secret twitch_secret
+  #   token: !secret twitch_token
+  #   channels:
+  #     - TrentAU
+  #     - Evasion_GG
 
   - platform: mqtt
     name: trent_last_changed
@@ -89,136 +124,19 @@ sensor:
         friendly_name: "Blank Sensor"
         value_template: ""
 
-  # - platform: hp_ilo
-  #   host: 192.168.1.237
-  #   username: !secret ilo_user
-  #   password: !secret ilo_pass
-  #   monitored_variables:
-  #     - name: power_status
-  #       sensor_type: server_power_status
-  #     - name: uid_status
-  #       sensor_type: server_uid_status
-  #     # - name: Server Health
-  #     #   sensor_type: server_health
-  #     #   value_template: "{{ ilo_data.health_at_a_glance }}"
-
-  #     - name: bios_hardware
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['bios_hardware']['status'] }}"
-  #     - name: CPU fanspeed
-  #       sensor_type: server_health
-  #       unit_of_measurement: "%"
-  #       value_template: '{{ ilo_data.fans["Fan 1"].speed[0] }}'
-  #     - name: fan_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['fans']['status'] }}"
-
-  #     - name: memory_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['memory']['status'] }}"
-
-  #     - name: network_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['network']['status'] }}"
-
-  #     - name: processor_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['processor']['status'] }}"
-
-  #     - name: storage_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['storage']['status'] }}"
-
-  #     - name: temperature_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.health_at_a_glance['temperature']['status'] }}"
-
-  #     - name: memory_cpu1_sockets
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['number_of_sockets'] }}"
-
-  #     - name: memory_cpu1_frequency
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['operating_frequency'] }}"
-
-  #     - name: memory_cpu1_voltage
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['operating_voltage'] }}"
-
-  #     - name: memory_cpu1_size
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_1']['total_memory_size'] }}"
-
-  #     - name: memory_cpu2_sockets
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['number_of_sockets'] }}"
-
-  #     - name: memory_cpu2_frequency
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['operating_frequency'] }}"
-
-  #     - name: memory_cpu2_voltage
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['operating_voltage'] }}"
-
-  #     - name: memory_cpu2_size
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.memory['memory_details_summary']['cpu_2']['total_memory_size'] }}"
-  #     - name: nic_ilo_ip_address
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['ip_address'] }}"
-
-  #     - name: nic_ilo_mac
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['mac_address'] }}"
-
-  #     - name: nic_ilo_status
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.nic_information['iLO iLO Dedicated Network Port']['status'] }}"
-
-  #     - name: psu_summary
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.power_supply_summary['present_power_reading'] }}"
-
-  #     - name: temperature_inlet
-  #       sensor_type: server_health
-  #       unit_of_measurement: "°C"
-  #       value_template: "{{ ilo_data.temperature['01-Inlet Ambient']['currentreading'] }}"
-
-  #     - name: temperature_cpu1_
-  #       sensor_type: server_health
-  #       unit_of_measurement: "°C"
-  #       value_template: "{{ ilo_data.temperature['02-CPU 1']['currentreading'] }}"
-  #     - name: temperature_cpu2_
-  #       sensor_type: server_health
-  #       unit_of_measurement: "°C"
-  #       value_template: "{{ ilo_data.temperature['03-CPU 2']['currentreading'] }}"
-
-  #     - name: processors_cores
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.processors['Proc 1']['execution_technology'] }}"
-
-  #     - name: processors_name
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.processors['Proc 1']['name'] }}"
-
-  #     - name: processors_speed
-  #       sensor_type: server_health
-  #       value_template: "{{ ilo_data.processors['Proc 1']['speed'] }}"
-
-  # - platform: template
-  #   sensors:
-  #     roof_door_ypos:
-  #       value_template: >-
-  #         {{ state_attr('sensor.roof_door_action','angle_y_absolute') | int }}
-  #       unit_of_measurement: "°"
-  #       friendly_name: "Roof Door Y Angle"
-  #       icon_template: >-
-  #         {% if state_attr('sensor.roof_door_action','angle_y_absolute') | int < 40 %}
-  #           mdi:door-closed
-  #         {% else %}
-  #           mdi:door-open
-  #         {% endif %}
+      # - platform: template
+      #   sensors:
+      #     roof_door_ypos:
+      #       value_template: >-
+      #         {{ state_attr('sensor.roof_door_action','angle_y_absolute') | int }}
+      #       unit_of_measurement: "°"
+      #       friendly_name: "Roof Door Y Angle"
+      #       icon_template: >-
+      #         {% if state_attr('sensor.roof_door_action','angle_y_absolute') | int < 40 %}
+      #           mdi:door-closed
+      #         {% else %}
+      #           mdi:door-open
+      #         {% endif %}
 
       #   luke_cgm_sgv:
       #     value_template: >
@@ -309,6 +227,57 @@ sensor:
         friendly_name: "Full Date"
         value_template: "{{ states('sensor.day') }}, {{ states('sensor.month') }} {{ now().year }}"
 
+  - platform: hp_ilo
+    host: 192.168.1.237
+    username: !secret ilo_user
+    password: !secret ilo_pass
+    monitored_variables:
+      - name: power_status
+        sensor_type: server_power_status
+      - name: uid_status
+        sensor_type: server_uid_status
+      - name: bios_hardware
+        sensor_type: server_health
+        value_template: "{{ ilo_data.health_at_a_glance['bios_hardware']['status'] }}"
+      - name: Server Fan 1
+        sensor_type: server_health
+        unit_of_measurement: "%"
+        value_template: '{{ ilo_data.fans["Fan 1"].speed[0] }}'
+      - name: Server Fan 2
+        sensor_type: server_health
+        unit_of_measurement: "%"
+        value_template: '{{ ilo_data.fans["Fan 2"].speed[0] }}'
+      - name: Server Fan 3
+        sensor_type: server_health
+        unit_of_measurement: "%"
+        value_template: '{{ ilo_data.fans["Fan 3"].speed[0] }}'
+      - name: Server Fan 4
+        sensor_type: server_health
+        unit_of_measurement: "%"
+        value_template: '{{ ilo_data.fans["Fan 4"].speed[0] }}'
+      - name: fan_status
+        sensor_type: server_health
+        value_template: "{{ ilo_data.health_at_a_glance['fans']['status'] }}"
+      - name: temperature_status
+        sensor_type: server_health
+        value_template: "{{ ilo_data.health_at_a_glance['temperature']['status'] }}"
+      - name: psu_summary
+        sensor_type: server_health
+        unit_of_measurement: "W"
+        value_template: "{{ ilo_data.power_supply_summary['present_power_reading'].split(' ')[0] }}"
+      - name: temperature_inlet
+        sensor_type: server_health
+        unit_of_measurement: "°C"
+        value_template: "{{ ilo_data.temperature['01-Inlet Ambient'].currentreading[0] }}"
+      - name: temperature_cpu1_
+        sensor_type: server_health
+        unit_of_measurement: "°C"
+        value_template: "{{ ilo_data.temperature['02-CPU 1'].currentreading[0] }}"
+      - name: temperature_cpu2_
+        sensor_type: server_health
+        unit_of_measurement: "°C"
+        value_template: "{{ ilo_data.temperature['03-CPU 2'].currentreading[0] }}"
+
       # ## Vaccuum templates, for showing attributes as sensors, etc.
 
       # vacuum_status:
@@ -343,9 +312,6 @@ sensor:
       #   value_template: "{{ states.vacuum.roborock_s7.attributes.cleaned_area }}"
 
 binary_sensor:
-  - platform: ping
-    name: nas_internet_access
-    host: 8.8.8.8
   - platform: tod
     name: Night
     after: sunset

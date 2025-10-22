@@ -51,7 +51,6 @@
             states.light.philips_hue_go,
             states.light.kitchen_light_switch,
             states.light.dining_light_switch,
-            states.light.hall_light_switch,
             states.light.front_door_light_switch_2,
             states.light.bathroom_dimmer_light,
             states.switch.laundry_light,
@@ -63,7 +62,6 @@
             states.media_player.lounge_room_tv,
             states.media_player.bedroom_tv,
             states.switch.bathroom_light_switch_right,
-            states.media_player.htpc_2,
             states.media_player.lounge,
             states.media_player.bathroom,
             states.media_player.media,
@@ -103,8 +101,6 @@
             <font color='#6a7377'>Everything is off</font>
           {% endif %}
           </b>
-
-
 
         # mailbox: >
         #   {% set mailbox = states('sensor.mailbox') %}
@@ -189,4 +185,4 @@
         # nas: |
         #   {% if is_state('binary_sensor.nas_internet_access', 'off') -%}
         #     {{-'\u26A0\uFE0F'}} Internet is Offline
-        #   {%- endif %}          
+        #   {%- endif %}

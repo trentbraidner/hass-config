@@ -11,8 +11,11 @@ homeassistant:
     - type: trusted_networks
       trusted_networks:
         - 192.168.1.0/24
+        - 192.168.1.84/32
+        - 192.168.1.108/32
       trusted_users:
         192.168.1.84: 71d920f46eb34b88b72e954b48307d97
+        192.168.1.108: 71d920f46eb34b88b72e954b48307d97
       allow_bypass_login: true
 
 default_config:
@@ -33,7 +36,7 @@ http:
   # ssl_certificate: /ssl/fullchain.pem
   # ssl_key: /ssl/privkey.pem
   use_x_forwarded_for: true
-  trusted_proxies: 192.168.1.0/24
+  trusted_proxies: 192.168.1.11/32
 
 influxdb:
   host: a0d7b954-influxdb
@@ -75,28 +78,28 @@ lovelace:
       { url: "/local/text-element.js?v=0", type: module },
       { url: /hacsfiles/tabbed-card/tabbed-card.js, type: module },
     ]
-  dashboards:
-    office-dashboard: # Needs to contain a hyphen (-)
-      mode: yaml
-      filename: ui-office.yaml
-      title: Office
-      icon: mdi:laptop
-      show_in_sidebar: true
-      require_admin: false
-    kitchen-dashboard: # Needs to contain a hyphen (-)
-      mode: yaml
-      filename: ui-kitchen.yaml
-      title: Kitchen
-      icon: mdi:silverware-fork
-      show_in_sidebar: true
-      require_admin: false
-    new-dash: # Needs to contain a hyphen (-)
-      mode: yaml
-      filename: ui-lovelace-new.yaml
-      title: new
-      icon: mdi:warning
-      show_in_sidebar: true
-      require_admin: false
+  # dashboards:
+  #   # office-dashboard: # Needs to contain a hyphen (-)
+  #   #   mode: yaml
+  #   #   filename: ui-office.yaml
+  #   #   title: Office
+  #   #   icon: mdi:laptop
+  #   #   show_in_sidebar: true
+  #   #   require_admin: false
+  #   kitchen-dashboard: # Needs to contain a hyphen (-)
+  #     mode: yaml
+  #     filename: ui-kitchen.yaml
+  #     title: Kitchen
+  #     icon: mdi:silverware-fork
+  #     show_in_sidebar: true
+  #     require_admin: false
+  #   new-dash: # Needs to contain a hyphen (-)
+  #     mode: yaml
+  #     filename: ui-lovelace-new.yaml
+  #     title: new
+  #     icon: mdi:warning
+  #     show_in_sidebar: true
+  #     require_admin: false
 
 recorder:
   # db_url: !secret recorder_db_url

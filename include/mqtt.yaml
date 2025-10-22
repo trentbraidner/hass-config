@@ -11,10 +11,6 @@ mqtt:
     value_template: >
       {{ value | replace(' ', 'T') }}
 
-  - platform: mqtt
-    name: mailbox
-    state_topic: homeassistant/persistence/mailbox
-
   ##Presense
 
   - platform: mqtt_room

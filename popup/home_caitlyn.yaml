@@ -52,7 +52,7 @@ browser_mod:
             #   card_mod:
             #     style: *state
 
-            - entity: device_tracker.caitlyn_iphone_3
+            - entity: device_tracker.caitlyn_iphone_icloud
               name: Position
               icon: cil:iphone-modern
               card_mod:

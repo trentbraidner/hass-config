@@ -140,12 +140,6 @@ views:
               - base
               - icon_apple_tv
               - loader
-          # - type: custom:button-card
-          #   entity: switch.xmas_tree_outlet
-          #   name: Xmas Tree
-          #   template:
-          #     - base
-          #     - icon_lamp
       #################################################
       #                                               #
       #                    office                     #
@@ -493,6 +487,12 @@ views:
                   }
                 ]]]
               circle_input_unit: "°C"
+          - type: custom:button-card
+            entity: switch.xmas_tree_outlet
+            name: Xmas Tree
+            template:
+              - base
+              - icon_lamp              
 
       #################################################
       #                                               #

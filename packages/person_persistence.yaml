@@ -5,19 +5,6 @@ homeassistant:
     device_tracker.trent_s_iphone:
       entity_picture: /local/device_tracker.svg
 
-# person:
-#   - name: Matte
-#     id: matte
-#     device_trackers:
-#       - device_tracker.mattias_iphone_unifi
-#       - device_tracker.iphone #ios
-
-#   - name: Sanja
-#     id: sanja
-#     device_trackers:
-#       - device_tracker.sanjas_iphone_unifi
-#       - device_tracker.sanjas_iphone_13 #ios
-
 mqtt:
   sensor:
     - name: trent_last_changed
@@ -32,7 +19,7 @@ mqtt:
 
 automation:
   - alias: person_home
-    id: '8423590985012'
+    id: "8423590985012"
     mode: parallel
     trigger:
       platform: state
